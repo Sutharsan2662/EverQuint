@@ -1,0 +1,4 @@
+pip install streamlit
+pip install requests
+pip install pydantic
+# Note: Ensure you have Ollama installed locally to serve the Mistral model.

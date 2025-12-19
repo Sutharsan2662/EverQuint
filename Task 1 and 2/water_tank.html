@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Water Tank Visualization</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f5f7fa;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container {
+        background: white;
+        width: 600px;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #bbb;
+        margin-top: 10px;
+        font-size: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        margin-top: 15px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #357ABD;
+    }
+
+    .result-card {
+        margin-top: 20px;
+        padding: 15px;
+        background: #e8f4ff;
+        border-radius: 10px;
+        font-size: 17px;
+        color: #004a7c;
+        border-left: 6px solid #4a90e2;
+    }
+
+    /* Visualization */
+    .visual-container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        margin-top: 30px;
+        gap: 5px;
+    }
+
+    .bar {
+        width: 35px;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .block {
+        background: #ffcc00;
+        border: none;
+    }
+
+    .water {
+        background: #4aa3ff;
+        border: none;
+    }
+	
+	#yAxis div {
+		height: 30px;       /* same height as table cells */
+		font-size: 14px;
+		color: #444;
+	}
+
+	#xAxis {
+		display: flex;
+		gap: 30px;          /* same width as table cells */
+		font-size: 14px;
+		color: #444;
+	}
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>💧 Water Tank Problem </h2>
+
+    <p>Enter block heights (e.g., 0,4,0,0,6,0,6,0)</p>
+
+    <input id="heightsInput" type="text" value="0,4,0,0,6,0,6,0">
+
+    <button onclick="computeWater()">Compute</button>
+
+    <div id="result"></div>
+    <div id="visual" class="visual-container"></div><div style="display: flex; align-items: flex-start; gap: 10px;">
+    <div id="yAxis"></div>
+    <div id="tableContainer"></div>
+</div>
+
+<div id="xAxis" style="margin-left: 40px; margin-top: 10px;"></div>
+
+</div>
+
+
+<script>
+/* ---------- Trapping Water Logic (same as Python) ----------- */
+function trap_water(heights) {
+    let n = heights.length;
+    if (n === 0) return [0, []];
+
+    let left = Array(n).fill(0);
+    let right = Array(n).fill(0);
+    let water = Array(n).fill(0);
+
+    left[0] = heights[0];
+    for (let i = 1; i < n; i++)
+        left[i] = Math.max(left[i-1], heights[i]);
+
+    right[n-1] = heights[n-1];
+    for (let i = n-2; i >= 0; i--)
+        right[i] = Math.max(right[i+1], heights[i]);
+
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+        water[i] = Math.max(0, Math.min(left[i], right[i]) - heights[i]);
+        total += water[i];
+    }
+
+    return [total, water];
+}
+
+/* ---------- Draw Bars (beautiful visualization) ----------- */
+function drawBars(heights, water_units) {
+    let visual = document.getElementById("visual");
+    visual.innerHTML = "";
+
+    let maxHeight = Math.max(...heights.map((h, i) => h + water_units[i]));
+
+    heights.forEach((h, idx) => {
+        let col = document.createElement("div");
+        col.className = "bar";
+
+        // blocks
+        for (let b = 0; b < h; b++) {
+            let block = document.createElement("div");
+            block.className = "block";
+            block.style.height = "25px";
+            col.appendChild(block);
+        }
+
+        // water
+        for (let w = 0; w < water_units[idx]; w++) {
+            let blue = document.createElement("div");
+            blue.className = "water";
+            blue.style.height = "25px";
+            col.appendChild(blue);
+        }
+
+        visual.appendChild(col);
+    });
+}
+
+/* ---------- Main Function ----------- */
+function computeWater() {
+    let input = document.getElementById("heightsInput").value;
+
+    try {
+        let heights = input.split(",").map(x => parseInt(x.trim()));
+        let [total, water_units] = trap_water(heights);
+
+        document.getElementById("result").innerHTML =
+            `<div class='result-card'>
+                <b>Total Water Trapped:</b> ${total} units<br>
+                <b>Water per block:</b> [${water_units}]
+            </div>`;
+
+        drawBars(heights, water_units);
+
+    }
+    catch {
+        document.getElementById("result").innerHTML =
+            "<div class='result-card' style='background:#ffe0e0;color:#a00000;'>Invalid Input!</div>";
+    }
+}
+</script>
+
+</body>
+</html>

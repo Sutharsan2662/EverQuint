@@ -1,0 +1,56 @@
+[
+    {
+        "id": "easy_1_arithmetic",
+        "question": "If John buys 5 notebooks at $2.50 each and 2 pens at $1.25 each, how much does he spend in total?",
+        "expected_answer": "$15.00",
+        "category": "easy"
+    },
+    {
+        "id": "easy_2_time",
+        "question": "A movie starts at 7:45 PM and runs for 1 hour and 50 minutes. What time does the movie end?",
+        "expected_answer": "9:35 PM",
+        "category": "easy"
+    },
+    {
+        "id": "easy_3_conversion",
+        "question": "A recipe requires 500 grams of flour. If I have 1.2 kilograms, how many grams of flour will be left over?",
+        "expected_answer": "700 grams",
+        "category": "easy"
+    },
+    {
+        "id": "easy_4_division",
+        "question": "A box contains 72 chocolates. If the chocolates are equally distributed among 9 children, how many chocolates does each child get?",
+        "expected_answer": "8 chocolates",
+        "category": "easy"
+    },
+    {
+        "id": "easy_5_rate",
+        "question": "A car travels 150 miles in 3 hours. What is its average speed in miles per hour?",
+        "expected_answer": "50 mph",
+        "category": "easy"
+    },
+    {
+        "id": "tricky_1_constraint",
+        "question": "A meeting needs 60 minutes. There are free slots: 09:00–09:30, 09:45–10:30, 11:00–12:00. Which slots can fit the meeting?",
+        "expected_answer": "Only the 11:00–12:00 slot can fit the 60-minute meeting.",
+        "category": "tricky"
+    },
+    {
+        "id": "tricky_2_chaining",
+        "question": "I have 10 apples. I buy twice as many bananas as apples, and then give away half of my bananas. How many pieces of fruit (apples and bananas) do I have left in total?",
+        "expected_answer": "20 pieces of fruit",
+        "category": "tricky"
+    },
+    {
+        "id": "tricky_3_negation",
+        "question": "Out of 20 people, 12 like coffee and 15 like tea. If 5 people like neither, how many people like both coffee and tea?",
+        "expected_answer": "12 people",
+        "category": "tricky"
+    },
+    {
+        "id": "tricky_4_ambiguity",
+        "question": "There are 4 sets of twins. If each twin needs 3 balloons, how many balloons are needed for all the children?",
+        "expected_answer": "24 balloons",
+        "category": "tricky"
+    }
+]
